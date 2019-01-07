@@ -71,9 +71,6 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             Intent intent = new Intent(getActivity(), CourseActivity.class);
             startActivity(intent);
         }
-        if (v == calendarView) {
-
-        }
     }
 
     @Override
