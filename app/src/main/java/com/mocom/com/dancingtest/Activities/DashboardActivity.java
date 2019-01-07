@@ -42,7 +42,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add_course) {
-            Intent intent = new Intent(this, CourseActivity.class);
+            Intent intent = new Intent(this, CalendarActivity.class);
             startActivity(intent);
         }
 

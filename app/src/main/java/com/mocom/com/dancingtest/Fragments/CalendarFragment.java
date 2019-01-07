@@ -1,22 +1,32 @@
 package com.mocom.com.dancingtest.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.Toast;
 
+import com.mocom.com.dancingtest.Activities.CourseActivity;
 import com.mocom.com.dancingtest.R;
 
-public class CourseFragment extends Fragment {
+public class CalendarFragment extends Fragment implements View.OnClickListener {
 
-    public CourseFragment() {
+    Button addCourse;
+    CalendarView calendarView;
+    String msg;
+
+    public CalendarFragment() {
         super();
     }
 
-    public static CourseFragment newInstance() {
-        CourseFragment fragment = new CourseFragment();
+    public static CalendarFragment newInstance() {
+        CalendarFragment fragment = new CalendarFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -34,17 +44,44 @@ public class CourseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_course, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
     }
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
 
+        addCourse = rootView.findViewById(R.id.add_course);
+        addCourse.setOnClickListener(this);
 
+        calendarView = rootView.findViewById(R.id.view_calendar);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                msg = dayOfMonth+"/"+(month+1)+"/"+year;
+                Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v == addCourse) {
+            Intent intent = new Intent(getActivity(), CourseActivity.class);
+            startActivity(intent);
+        }
+        if (v == calendarView) {
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @SuppressWarnings("UnusedParameters")
     private void init(Bundle savedInstanceState) {
 
     }
