@@ -1,4 +1,4 @@
-package com.mocom.com.dancingtest.model;
+package com.mocom.com.dancingtest.Model;
 
 import android.view.View;
 
