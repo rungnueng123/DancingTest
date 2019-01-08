@@ -3,6 +3,7 @@ package com.mocom.com.dancingtest.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class DashboardFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<CourseDao> courseList;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private RecyclerViewClickListener listener;
 
@@ -71,6 +73,13 @@ public class DashboardFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycler_view_dashboard);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        swipeRefreshLayout = rootView.findViewById(R.id.pullToRefresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            courseList.clear();
+            loadData();
+            swipeRefreshLayout.setRefreshing(false);
+        });
 
         courseList = new ArrayList<>();
 

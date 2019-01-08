@@ -3,7 +3,6 @@ package com.mocom.com.dancingtest.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,12 +54,9 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         addCourse.setOnClickListener(this);
 
         calendarView = rootView.findViewById(R.id.view_calendar);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                msg = dayOfMonth+"/"+(month+1)+"/"+year;
-                Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();
-            }
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            msg = dayOfMonth+"/"+(month+1)+"/"+year;
+            Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();
         });
 
     }

@@ -14,8 +14,6 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mocom.com.dancingtest.R;
@@ -104,29 +102,23 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
     private void addCourse(final String course, final String date) {
         if (!course.isEmpty()) {
             RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-            StringRequest request = new StringRequest(Request.Method.POST, addUrl, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
+            StringRequest request = new StringRequest(Request.Method.POST, addUrl, response -> {
 //                    Log.d("onResponse",response);
 //                    edtCourse.setText("");
 //                    Toast.makeText(getActivity(),"เพิ่มข้อมูลแล้วจ้า",Toast.LENGTH_SHORT).show();
-                    try {
-                        //converting response to json object
-                        JSONObject obj = new JSONObject(response);
+                try {
+                    //converting response to json object
+                    JSONObject obj = new JSONObject(response);
 
-                        Toast.makeText(getContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    edtCourse.setText("");
+                    Toast.makeText(getContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
+                edtCourse.setText("");
+            }, error -> {
 //                    Log.d("onError", error.toString());
 //                    Toast.makeText(getActivity(), "เกิดข้อผิดพลาดโปรดลองอีกครั้ง", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }) {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
