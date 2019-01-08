@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mocom.com.dancingtest.Adapter.CourseAdapter;
@@ -98,37 +96,29 @@ public class DashboardFragment extends Fragment {
         courseList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 jsonUrl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray array = jsonObject.getJSONArray("data");
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray array = jsonObject.getJSONArray("data");
 
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject obj = array.getJSONObject(i);
-                                CourseDao item = new CourseDao(
-                                        obj.getString("id"),
-                                        obj.getString("CourseName"),
-                                        obj.getString("Date")
-                                );
-                                courseList.add(item);
-                            }
-
-                            adapter = new CourseAdapter(courseList, getContext(), listener);
-                            recyclerView.setAdapter(adapter);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject obj = array.getJSONObject(i);
+                            CourseDao item = new CourseDao(
+                                    obj.getString("id"),
+                                    obj.getString("CourseName"),
+                                    obj.getString("Date")
+                            );
+                            courseList.add(item);
                         }
+
+                        adapter = new CourseAdapter(courseList, getContext(), listener);
+                        recyclerView.setAdapter(adapter);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                error -> Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show());
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
@@ -137,7 +127,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        loadData();
+        loadData();
     }
 
     @SuppressWarnings("UnusedParameters")
