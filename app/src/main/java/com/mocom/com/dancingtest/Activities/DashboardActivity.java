@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mocom.com.dancingtest.Fragments.DashboardFragment;
 import com.mocom.com.dancingtest.R;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -17,8 +18,17 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
         initToolbar();
+        initInstance(savedInstanceState);
+    }
+
+    private void initInstance(Bundle savedInstanceState) {
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_dashboard, DashboardFragment.newInstance())
+                    .commit();
+        }
     }
 
     private void initToolbar() {

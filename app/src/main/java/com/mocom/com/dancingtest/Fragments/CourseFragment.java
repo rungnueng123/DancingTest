@@ -28,6 +28,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.mocom.com.dancingtest.Config.Config.DATA_URL;
+
 public class CourseFragment extends Fragment implements View.OnClickListener {
 
     EditText edtCourse;
@@ -36,7 +38,7 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
     Calendar calendar;
     InputStream is = null;
     String selectDate = "";
-    String addUrl = "http://10.10.30.92/KotlinCalendarPHP/AddCourse.php";
+    String addUrl = DATA_URL + "AddCourse.php";
 
     public CourseFragment() {
         super();
@@ -116,7 +118,7 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
+                    edtCourse.setText("");
                 }
             }, new Response.ErrorListener() {
                 @Override
