@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mocom.com.dancingtest.Holder.CourseHolder;
+import com.mocom.com.dancingtest.Model.RecyclerViewClickListener;
 import com.mocom.com.dancingtest.Model.dao.CourseDao;
 import com.mocom.com.dancingtest.R;
 
@@ -15,12 +16,14 @@ import java.util.List;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseHolder> {
 
+    private RecyclerViewClickListener listener;
     private List<CourseDao> courses;
     private Context context;
 
-    public CourseAdapter(List<CourseDao> courses,Context context) {
+    public CourseAdapter(List<CourseDao> courses, Context context, RecyclerViewClickListener listener) {
         this.courses = courses;
         this.context = context;
+        this.listener = listener;
     }
 
 
@@ -39,7 +42,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseHolder> {
     @Override
     public CourseHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_menu, parent, false);
-        return new CourseHolder(v);
+        return new CourseHolder(v, listener);
     }
 
     @Override

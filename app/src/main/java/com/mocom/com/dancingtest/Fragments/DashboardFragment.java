@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mocom.com.dancingtest.Adapter.CourseAdapter;
+import com.mocom.com.dancingtest.Model.RecyclerViewClickListener;
 import com.mocom.com.dancingtest.Model.dao.CourseDao;
 import com.mocom.com.dancingtest.R;
 
@@ -36,6 +37,8 @@ public class DashboardFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<CourseDao> courseList;
+
+    private RecyclerViewClickListener listener;
 
     public DashboardFragment() {
         super();
@@ -112,7 +115,7 @@ public class DashboardFragment extends Fragment {
                                 courseList.add(item);
                             }
 
-                            adapter = new CourseAdapter(courseList, getContext());
+                            adapter = new CourseAdapter(courseList, getContext(), listener);
                             recyclerView.setAdapter(adapter);
 
                         } catch (JSONException e) {
